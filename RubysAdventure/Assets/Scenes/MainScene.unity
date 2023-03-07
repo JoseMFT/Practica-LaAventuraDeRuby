@@ -2864,7 +2864,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809653368}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2882,6 +2882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationTime: 1
   alphaGoal: -1
+  joyStick: {fileID: 0}
 --- !u!4 &821216509 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7482154286586046905, guid: a68a25f1f3306204b825a393fd8613e3, type: 3}
@@ -2927,8 +2928,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9, y: -0.5}
-  m_SizeDelta: {x: -28, y: -3}
+  m_AnchoredPosition: {x: 11.5, y: -0.5}
+  m_SizeDelta: {x: -23, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &897722924
 MonoBehaviour:
@@ -3458,19 +3459,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1001 &1453503634
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4046,11 +4035,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8203104422089961717, guid: 87d6cb5f085ba6b478a70f6703e68da6, type: 3}
       propertyPath: speed
-      value: 7
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8203104422089961717, guid: 87d6cb5f085ba6b478a70f6703e68da6, type: 3}
+      propertyPath: ogSpeed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8203104422089961717, guid: 87d6cb5f085ba6b478a70f6703e68da6, type: 3}
       propertyPath: joyStick
       value: 
       objectReference: {fileID: 61502764}
+    - target: {fileID: 8203104422089961717, guid: 87d6cb5f085ba6b478a70f6703e68da6, type: 3}
+      propertyPath: maxSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87d6cb5f085ba6b478a70f6703e68da6, type: 3}

@@ -4,16 +4,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class RubyController: MonoBehaviour {
-    Vector2 position, inputMovement, newposition;
+    Vector2 position, inputMovement, newPosition, prevPosition;
     public bool hasHorizontalInput, hasVerticalInput, isWalking, keyboardActive;
-    public float maxSpeed = 6f, speed = 3f, ogSpeed;
+    public float maxSpeed = 7.5f, speed = 5f, ogSpeed = 5f;
     public GameObject joyStick;
     Rigidbody2D rigidbody2d;
+    string[] meanSpeedString;
+    float meanSpeedFloatAdd = 0f, meanSpeed = 0f;
 
     private void Awake () {
         rigidbody2d = GetComponent<Rigidbody2D> ();
     }
     void Start () {
+        prevPosition = transform.position;
+        newPosition = prevPosition;
+        position = prevPosition;
         ogSpeed = speed;
         maxSpeed = speed * 1.5f;
     }
@@ -30,7 +35,7 @@ public class RubyController: MonoBehaviour {
         }
 
         position = rigidbody2d.position;
-        position += inputMovement * Time.deltaTime * maxSpeed;
+        position += inputMovement * Time.deltaTime * speed;
         rigidbody2d.MovePosition (position);
 
 
@@ -43,6 +48,25 @@ public class RubyController: MonoBehaviour {
         } else {
             speed = ogSpeed;
         }
+
+        newPosition = position;
+        Debug.Log ((newPosition - prevPosition).magnitude.ToString ());
+        if (meanSpeedString != null) {
+            if (meanSpeedString.Length < 255) {
+                meanSpeedString[meanSpeedString.Length - 1] = (CurrentSpeed (newPosition, prevPosition).ToString ());
+                meanSpeedFloatAdd += float.Parse (meanSpeedString[meanSpeedString.Length - 1]);
+                meanSpeed = meanSpeedFloatAdd / meanSpeedString.Length;
+                Debug.Log (meanSpeed.ToString ());
+            } else {
+                meanSpeedString = null;
+                meanSpeedFloatAdd = 0;
+                meanSpeed = 0;
+            }
+        } else {
+            meanSpeedString[0] = (CurrentSpeed (newPosition, prevPosition).ToString ());
+        }
+        prevPosition = newPosition;        
+        
     }
 
     public void OnMovement (InputAction.CallbackContext value) {
@@ -50,28 +74,6 @@ public class RubyController: MonoBehaviour {
         position.Set (inputMovement.x, inputMovement.y);
         position.Normalize ();
     }
-
-    /*public void DetectController () {
-        if (Input.GetJoystickNames ().Length > 0) {
-            if (!joyStick.activeSelf) {
-                joyStick.SetActive (true);
-            }
-        } else {
-            if (joyStick.activeSelf) {
-                joyStick.SetActive (false);
-            }
-        }
-
-        if (!isWalking) {
-            if (Input.GetAxis ("Horizontal") || Input.GetAxis ("Vertical")) {
-                joyStick.SetActive (false);
-                inputMovement.x = Input.GetAxis ("Horizontal");
-                inputMovement.y = Input.GetAxis ("Vertical");
-                position.Set (inputMovement.x, inputMovement.y);
-                position.Normalize ();
-            }
-        }    
-    }*/
 
     public void DetectInput () {
         hasHorizontalInput = !Mathf.Approximately (inputMovement.x, 0f);
@@ -83,6 +85,13 @@ public class RubyController: MonoBehaviour {
         if (collision != null) {
             Debug.Log ("ME CHOCO ME CHOCO ME CHOCO ME CHOCO AAAAAAAAAAAAAAAAAAA");
         }
+    }
+
+    public float CurrentSpeed (Vector2 x, Vector2 y) {
+        float z;
+        z = (x-y).magnitude / Time.deltaTime;
+        return z;
+        
     }
 
 }
