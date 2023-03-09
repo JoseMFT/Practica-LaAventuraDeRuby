@@ -9,7 +9,7 @@ public class RubyController: MonoBehaviour {
     Vector2 position, inputMovement, newPosition, prevPosition;
     public bool hasHorizontalInput, hasVerticalInput, isWalking, keyboardActive;
     public float maxSpeed = 7.5f, speed = 5f, ogSpeed = 5f;
-    public GameObject joyStick;
+    public GameObject joyStick, prefabHealthVFX;
     Rigidbody2D rigidbody2d;
     //string[] meanSpeedString;
     //float meanSpeedFloatAdd = 0f, meanSpeed = 0f;
@@ -89,6 +89,7 @@ public class RubyController: MonoBehaviour {
 
     private void OnTriggerEnter2D (Collider2D collision) {
         if (collision.tag == "HealthCollectibleFruit") {
+            Instantiate (prefabHealthVFX, collision.transform.position, collision.transform.rotation);
             Destroy (collision.gameObject);
             ChangeHealth (1);
         }
