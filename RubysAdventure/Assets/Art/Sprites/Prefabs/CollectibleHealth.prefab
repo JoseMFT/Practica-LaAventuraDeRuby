@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -3950483983452594309}
   - component: {fileID: 5724892844304097149}
   - component: {fileID: 5640302731876031906}
+  - component: {fileID: 5333971023000247907}
   m_Layer: 0
   m_Name: CollectibleHealth
   m_TagString: HealthCollectibleFruit
@@ -195,3 +196,16 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &5333971023000247907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6791988386296440513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c67d3c9ee6208554ea036851a2e6a0dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabContact: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 5edd8edcca7332c4da323651e250aa10
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Sherlock Press Personal Use
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 902df49c0a618f64a850d36894303aeb, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

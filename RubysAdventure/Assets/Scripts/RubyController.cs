@@ -2,23 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class RubyController: MonoBehaviour {
+    public TextMeshProUGUI currentHPText;
     public int maxHealth = 5;
-    int currentHealth;
-    Vector2 position, inputMovement, newPosition, prevPosition;
+    public bool animLowHP = false;
+    float timeInvincible = 0f, invincibleTimer = 2.5f;
+    bool isInvincible = false;
+    public Animator heartAnimator;
+    public int health { get { return currentHealth; } }
+    int currentHealth, prevHealth;
+    Vector2 position, inputMovement;
     public bool hasHorizontalInput, hasVerticalInput, isWalking, keyboardActive;
     public float maxSpeed = 7.5f, speed = 5f, ogSpeed = 5f;
-    public GameObject joyStick, prefabHealthVFX;
+    public GameObject joyStick;
     Rigidbody2D rigidbody2d;
-    //string[] meanSpeedString;
-    //float meanSpeedFloatAdd = 0f, meanSpeed = 0f;
 
     private void Awake () {
-        currentHealth = maxHealth;
         rigidbody2d = GetComponent<Rigidbody2D> ();
     }
     void Start () {
+        currentHealth = maxHealth;
+        prevHealth = maxHealth;
+        currentHPText.text = currentHealth + "/" + maxHealth;
         ogSpeed = speed;
         maxSpeed = speed * 1.5f;
     }
@@ -49,31 +56,37 @@ public class RubyController: MonoBehaviour {
             speed = ogSpeed;
         }
 
-        /*newPosition = position;
-        Debug.Log ((newPosition - prevPosition).magnitude.ToString ());
-        if (meanSpeedString != null) {
-            if (meanSpeedString.Length < 255) {
-                meanSpeedString[meanSpeedString.Length - 1] = (CurrentSpeed (newPosition, prevPosition).ToString ());
-                meanSpeedFloatAdd += float.Parse (meanSpeedString[meanSpeedString.Length - 1]);
-                meanSpeed = meanSpeedFloatAdd / meanSpeedString.Length;
-                Debug.Log (meanSpeed.ToString ());
-            } else {
-                meanSpeedString = null;
-                meanSpeedFloatAdd = 0;
-                meanSpeed = 0;
-            }
-        } else {
-            meanSpeedString[0] = (CurrentSpeed (newPosition, prevPosition).ToString ());
+        if (prevHealth > currentHealth) {
+            heartAnimator.SetTrigger ("LostHealth");
+        } else if (prevHealth < currentHealth) {
+            heartAnimator.SetTrigger ("GainedHealth");
         }
-        prevPosition = newPosition;        
-        */
-    }
+        prevHealth = currentHealth;
 
-    /*public void OnMovement (InputAction.CallbackContext value) {
-        inputMovement = value.ReadValue<Vector2> ();
-        position.Set (inputMovement.x, inputMovement.y);
-        position.Normalize ();
-    }*/
+        if (currentHealth <= 1) {
+            if (animLowHP != true) {
+                if (heartAnimator.GetCurrentAnimatorStateInfo (0).normalizedTime > 1.0f) {
+                    heartAnimator.SetBool ("LowHP", true);
+                    animLowHP = true;
+                }
+            }
+
+        } else {
+            if (animLowHP != false) {
+                heartAnimator.SetBool ("LowHP", false);
+                animLowHP = false;
+            }
+        }
+
+        if (isInvincible) {
+            if (timeInvincible >= invincibleTimer) {
+                timeInvincible += Time.deltaTime;
+            } else {
+                isInvincible = false;
+                timeInvincible = 0f;
+            }
+        }
+    }
 
     public void DetectInput () {
         hasHorizontalInput = !Mathf.Approximately (inputMovement.x, 0f);
@@ -87,24 +100,19 @@ public class RubyController: MonoBehaviour {
         }
     }
 
-    private void OnTriggerEnter2D (Collider2D collision) {
-        if (collision.tag == "HealthCollectibleFruit") {
-            Instantiate (prefabHealthVFX, collision.transform.position, collision.transform.rotation);
-            Destroy (collision.gameObject);
-            ChangeHealth (1);
+    public void ChangeHealth (int amount) {
+        if (amount < 0) {
+            if (isInvincible) {
+                return;
+            }
+            isInvincible = true;
+            timeInvincible = 0f;
+        }
+        if (isInvincible = false || amount > 0) {
+            currentHealth = Mathf.Clamp (currentHealth + amount, 0, maxHealth);
+            Debug.Log (currentHealth + " / " + maxHealth);
+            currentHPText.text = currentHealth + "/" + maxHealth;
         }
     }
-
-    public void ChangeHealth (int amount) {
-        currentHealth = Mathf.Clamp (currentHealth + amount, 0, maxHealth);
-        Debug.Log (currentHealth + " / " + maxHealth);
-    }
-
-    /*public float CurrentSpeed (Vector2 x, Vector2 y) {
-        float z;
-        z = (x-y).magnitude / Time.deltaTime;
-        return z;
-        
-    }*/
 
 }
