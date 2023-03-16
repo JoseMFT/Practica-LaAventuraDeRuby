@@ -6,7 +6,7 @@ public class DamageZone: MonoBehaviour {
     const float damageTime = 2f;
     public float currentTime = 0;
     public GameObject prefabHit;
-    RubyController rubyController;
+    public RubyController rubyController;
 
     // Start is called before the first frame update
     private void OnTriggerStay2D (Collider2D collision) {

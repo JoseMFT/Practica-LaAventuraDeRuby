@@ -2,21 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
 
 public class RubyController: MonoBehaviour {
-    public TextMeshProUGUI currentHPText;
     public int maxHealth = 5;
     public bool animLowHP = false;
     float timeInvincible = 0f, invincibleTimer = 2.5f;
-    bool isInvincible = false;
+    public bool isInvincible = false;
     public Animator heartAnimator;
     public int health { get { return currentHealth; } }
-    int currentHealth, prevHealth;
+    public int currentHealth, prevHealth;
     Vector2 position, inputMovement;
-    public bool hasHorizontalInput, hasVerticalInput, isWalking, keyboardActive;
+    bool hasHorizontalInput, hasVerticalInput, isWalking;
     public float maxSpeed = 7.5f, speed = 5f, ogSpeed = 5f;
-    public GameObject joyStick;
     Rigidbody2D rigidbody2d;
 
     private void Awake () {
@@ -25,21 +22,15 @@ public class RubyController: MonoBehaviour {
     void Start () {
         currentHealth = maxHealth;
         prevHealth = maxHealth;
-        currentHPText.text = currentHealth + "/" + maxHealth;
         ogSpeed = speed;
         maxSpeed = speed * 1.5f;
     }
 
 
     void FixedUpdate () {
-        keyboardActive = !joyStick.activeSelf;
 
-        //if (keyboardActive) {
         inputMovement.x = Input.GetAxis ("Horizontal");
         inputMovement.y = Input.GetAxis ("Vertical");
-        //position.Set (inputMovement.x, inputMovement.y);
-        //position.Normalize ();
-        //}
 
         position = rigidbody2d.position;
         position += inputMovement * speed * Time.deltaTime;
@@ -63,23 +54,23 @@ public class RubyController: MonoBehaviour {
         }
         prevHealth = currentHealth;
 
-        if (currentHealth <= 1) {
+        if (currentHealth == 1) {
             if (animLowHP != true) {
                 if (heartAnimator.GetCurrentAnimatorStateInfo (0).normalizedTime > 1.0f) {
-                    heartAnimator.SetBool ("LowHP", true);
-                    animLowHP = true;
+                    animLowHP = !animLowHP;
+                    heartAnimator.SetBool ("LowHP", animLowHP);
                 }
             }
 
         } else {
-            if (animLowHP != false) {
-                heartAnimator.SetBool ("LowHP", false);
-                animLowHP = false;
+            if (animLowHP) {
+                animLowHP = !animLowHP;
+                heartAnimator.SetBool ("LowHP", animLowHP);
             }
         }
 
         if (isInvincible) {
-            if (timeInvincible >= invincibleTimer) {
+            if (timeInvincible < invincibleTimer) {
                 timeInvincible += Time.deltaTime;
             } else {
                 isInvincible = false;
@@ -101,17 +92,15 @@ public class RubyController: MonoBehaviour {
     }
 
     public void ChangeHealth (int amount) {
-        if (amount < 0) {
-            if (isInvincible) {
-                return;
-            }
-            isInvincible = true;
-            timeInvincible = 0f;
-        }
-        if (isInvincible = false || amount > 0) {
+        Debug.Log ("Auch (?)");
+        if ((isInvincible == false && amount < 0) || amount > 0) {
             currentHealth = Mathf.Clamp (currentHealth + amount, 0, maxHealth);
             Debug.Log (currentHealth + " / " + maxHealth);
-            currentHPText.text = currentHealth + "/" + maxHealth;
+
+            if (amount < 0) {
+                isInvincible = true;
+                timeInvincible = 0f;
+            }
         }
     }
 
