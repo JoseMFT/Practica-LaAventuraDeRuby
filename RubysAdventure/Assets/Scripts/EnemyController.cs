@@ -9,11 +9,11 @@ public class EnemyController: MonoBehaviour {
     Vector2 enemyPosition;
     Rigidbody2D rbEnemy;
     public RubyController player;
-    Animator robotAnimator;
+    public Animator robotAnimator;
     // Start is called before the first frame update
     void Start () {
-        robotAnimator = GetComponent<Animator> ();
         timer = changeTime;
+        robotAnimator = GetComponent<Animator> ();
         collisionTimer = collisionChangeTime;
         rbEnemy = GetComponent<Rigidbody2D> ();
     }
@@ -34,13 +34,13 @@ public class EnemyController: MonoBehaviour {
         enemyPosition = rbEnemy.position;
 
         if (vertical) {
+            robotAnimator.SetFloat ("MoveX", 0f);
+            robotAnimator.SetFloat ("MoveY", speed);
             enemyPosition.y += Time.deltaTime * speed;
-            robotAnimator.SetBool ("WalkingVertical", vertical);
-            robotAnimator.SetFloat ("Speed", speed);
         } else {
+            robotAnimator.SetFloat ("MoveX", speed);
+            robotAnimator.SetFloat ("MoveY", 0f);
             enemyPosition.x += Time.deltaTime * speed;
-            robotAnimator.SetBool ("WalkingVertical", vertical);
-            robotAnimator.SetFloat ("Speed", speed);
         }
 
         rbEnemy.MovePosition (enemyPosition);
