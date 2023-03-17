@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class RubyController: MonoBehaviour {
     public int maxHealth = 5;
     public bool animLowHP = false, isInvincible = false;
-    float timeInvincible = 0f, invincibleTimer = 2.5f, shotPace = .75f, shotCD = 0f;
+    float timeInvincible = 0f, invincibleTimer = 2.5f, shotPace = .33f, shotCD = 0f;
     public Animator heartAnimator, rubyAnimator;
     public int health { get { return currentHealth; } }
     public int currentHealth, prevHealth;
@@ -116,7 +116,6 @@ public class RubyController: MonoBehaviour {
             Debug.Log (currentHealth + " / " + maxHealth);
 
             if (amount < 0) {
-                rigidbody2d.AddForce (-inputMovement * 120f);
                 rubyAnimator.SetTrigger ("Hit");
                 isInvincible = true;
                 timeInvincible = 0f;

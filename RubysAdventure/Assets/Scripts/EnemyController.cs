@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController: MonoBehaviour {
 
     float speed = 2f, changeTime = 2f, timer, collisionTimer, collisionChangeTime = 2f;
-    bool vertical = false;
+    bool vertical = false, broken = true;
     Vector2 enemyPosition;
     Rigidbody2D rbEnemy;
     public RubyController player;
@@ -45,6 +45,10 @@ public class EnemyController: MonoBehaviour {
 
         rbEnemy.MovePosition (enemyPosition);
 
+        if (!broken) {
+            return;
+        }
+
     }
 
     private void OnCollisionEnter2D (Collision2D collision) {
@@ -64,5 +68,11 @@ public class EnemyController: MonoBehaviour {
                 player.ChangeHealth (-1);
             }
         }
+    }
+
+    public void Fix () {
+        broken = false;
+        rbEnemy.simulated = false;
+        robotAnimator.SetTrigger ("Fixed");
     }
 }

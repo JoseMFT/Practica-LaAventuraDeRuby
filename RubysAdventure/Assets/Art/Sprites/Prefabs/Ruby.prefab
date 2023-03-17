@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 8203104422089961717}
   - component: {fileID: 5400753496002196094}
   - component: {fileID: 7839294139418211363}
-  m_Layer: 0
+  - component: {fileID: 1268090030}
+  m_Layer: 8
   m_Name: Ruby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8203104422089961712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3174838, y: 1.3174838, z: 1.3174838}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,17 +100,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e15c791e84911844b590cdb4a548f70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHPText: {fileID: 0}
   maxHealth: 5
   animLowHP: 0
   isInvincible: 0
   heartAnimator: {fileID: 0}
+  rubyAnimator: {fileID: 0}
   currentHealth: 5
   prevHealth: 5
   maxSpeed: 10
   speed: 5
   ogSpeed: 5
-  joyStick: {fileID: 0}
+  prefabCog: {fileID: 4255702273288336458, guid: 0a4c32a8b705da94494ccdd2b43e835e, type: 3}
 --- !u!50 &5400753496002196094
 Rigidbody2D:
   serializedVersion: 4
@@ -157,3 +158,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.41437984, y: 0.434213}
   m_EdgeRadius: 0
+--- !u!95 &1268090030
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8203104422089961712}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b77822e0485373d40b5beb92e9a5e728, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
