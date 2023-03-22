@@ -91,7 +91,7 @@ public class RubyController: MonoBehaviour {
         if (shotCD <= shotPace) {
             shotCD += Time.deltaTime;
         }
-        if (Input.GetButton ("Fire1") && shotCD > shotPace) {
+        if ((Input.GetButton ("Fire1")|| Input.GetKey("c")) && shotCD > shotPace) {
             Launch ();
             shotCD = 0f;
         }
