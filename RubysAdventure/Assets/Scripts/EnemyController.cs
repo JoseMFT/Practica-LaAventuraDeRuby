@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyController: MonoBehaviour {
-
+    AudioSource audioSource;
+    public AudioClip danceClip, brokenClip;
     float speed = 2f, changeTime = 2f, timer, collisionTimer, collisionChangeTime = 2f;
     bool vertical = false, broken = true;
+    public ParticleSystem smokeEffect;
     Vector2 enemyPosition;
     Rigidbody2D rbEnemy;
     public RubyController player;
@@ -16,6 +18,8 @@ public class EnemyController: MonoBehaviour {
         robotAnimator = GetComponent<Animator> ();
         collisionTimer = collisionChangeTime;
         rbEnemy = GetComponent<Rigidbody2D> ();
+        audioSource = GetComponent<AudioSource>();
+        PlaySound(brokenClip);
     }
 
     // Update is called once per frame
@@ -70,7 +74,16 @@ public class EnemyController: MonoBehaviour {
         }
     }
 
+    public void PlaySound (AudioClip clip)
+    {
+        audioSource.PlayOneShot (clip);
+    }
+
     public void Fix () {
+        smokeEffect.Stop();
+        audioSource.Stop();
+        PlaySound(danceClip);
+        Destroy(smokeEffect, 1);
         broken = false;
         rbEnemy.simulated = false;
         robotAnimator.SetTrigger ("Fixed");

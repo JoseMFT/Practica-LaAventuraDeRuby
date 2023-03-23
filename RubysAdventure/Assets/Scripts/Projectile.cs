@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile: MonoBehaviour {
+    public GameObject hitFX;
     Rigidbody2D rbProjectile;
+    public AudioClip hitRobotClip;
     // Start is called before the first frame update
     void Awake () {
         rbProjectile = GetComponent<Rigidbody2D> ();
@@ -23,8 +25,11 @@ public class Projectile: MonoBehaviour {
     private void OnCollisionEnter2D (Collision2D collision) {
 
         EnemyController enemyController = collision.gameObject.GetComponent<EnemyController> ();
-        if (enemyController != null) {
+        Instantiate(hitFX, transform.position, Quaternion.identity);
+
+        if (enemyController != null) {            
             enemyController.Fix ();
+            enemyController.PlaySound(hitRobotClip);
         }
         Destroy (gameObject);
 

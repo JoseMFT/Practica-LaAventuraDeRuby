@@ -1,0 +1,2 @@
+Alumno: José María Frías Tejera
+Enlace de gitHub: https://github.com/JoseMFT/Practica-LaAventuraDeRuby

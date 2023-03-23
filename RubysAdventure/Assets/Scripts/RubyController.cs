@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class RubyController: MonoBehaviour {
+    AudioSource audioSource;
+    public AudioClip damageClip;
     public int maxHealth = 5;
     public bool animLowHP = false, isInvincible = false;
     float timeInvincible = 0f, invincibleTimer = 2.5f, shotPace = .33f, shotCD = 0f;
-    public Animator heartAnimator, rubyAnimator;
+    public Animator rubyAnimator;
     public int health { get { return currentHealth; } }
     public int currentHealth, prevHealth;
     Vector2 position, inputMovement, lookDirection = new Vector2 (1f, 0f);
@@ -23,9 +25,9 @@ public class RubyController: MonoBehaviour {
     }
     void Start () {
         currentHealth = maxHealth;
-        prevHealth = maxHealth;
         ogSpeed = speed;
         maxSpeed = speed * 1.5f;
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -58,27 +60,6 @@ public class RubyController: MonoBehaviour {
         rubyAnimator.SetFloat ("Look Y", lookDirection.y);
         rubyAnimator.SetFloat ("Speed", inputMovement.magnitude);
 
-        if (prevHealth > currentHealth) {
-            heartAnimator.SetTrigger ("LostHealth");
-        } else if (prevHealth < currentHealth) {
-            heartAnimator.SetTrigger ("GainedHealth");
-        }
-        prevHealth = currentHealth;
-
-        if (currentHealth == 1) {
-            if (animLowHP != true) {
-                if (heartAnimator.GetCurrentAnimatorStateInfo (0).normalizedTime > 1.0f) {
-                    animLowHP = !animLowHP;
-                    heartAnimator.SetBool ("LowHP", animLowHP);
-                }
-            }
-
-        } else {
-            if (animLowHP) {
-                animLowHP = !animLowHP;
-                heartAnimator.SetBool ("LowHP", animLowHP);
-            }
-        }
 
         if (isInvincible) {
             if (timeInvincible < invincibleTimer) {
@@ -109,14 +90,15 @@ public class RubyController: MonoBehaviour {
         }
     }
 
-    public void ChangeHealth (int amount) {
+    public void ChangeHealth (int amount) {        
         Debug.Log ("Auch (?)");
         if ((isInvincible == false && amount < 0) || amount > 0) {
             currentHealth = Mathf.Clamp (currentHealth + amount, 0, maxHealth);
             Debug.Log (currentHealth + " / " + maxHealth);
-
+            UIHealthBar.instance.SetValue(currentHealth, maxHealth);
             if (amount < 0) {
                 rubyAnimator.SetTrigger ("Hit");
+                PlaySound(damageClip);
                 isInvincible = true;
                 timeInvincible = 0f;
             }
@@ -129,6 +111,11 @@ public class RubyController: MonoBehaviour {
         projectile.Launch (lookDirection, 300f);
         rubyAnimator.SetTrigger ("Launch");
 
+    }
+
+    public void PlaySound (AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 
 }

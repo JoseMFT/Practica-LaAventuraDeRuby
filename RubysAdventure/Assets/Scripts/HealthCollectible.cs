@@ -3,18 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthCollectible: MonoBehaviour {
+    public AudioClip collectedClip;
     RubyController rubyController;
     public GameObject prefabContact;
     void Start () {
 
     }
 
-    // Update is called once per frame
-    void Update () {
-
-
-
-    }
 
     private void OnTriggerEnter2D (Collider2D collision) {
         rubyController = collision.GetComponent<RubyController> ();
@@ -24,6 +19,7 @@ public class HealthCollectible: MonoBehaviour {
                 rubyController.ChangeHealth (1);
                 Instantiate (prefabContact, transform.position, transform.rotation);
                 Destroy (gameObject);
+                rubyController.PlaySound(collectedClip);
             }
         }
     }

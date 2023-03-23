@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FloorBricksToGrassSquare_1
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -1490410292, guid: 2e6ecdf01ba70e3489b17b3f6525fec2, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.82035595, g: 1, b: 0.6745283, a: 1}
   m_Transform:
     e00: 1
     e01: 0

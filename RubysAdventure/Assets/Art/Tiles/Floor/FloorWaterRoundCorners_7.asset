@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FloorWaterRoundCorners_7
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -477006034, guid: 957383e82ad8601499ca4cac1dd1214a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.82035595, g: 1, b: 0.6745283, a: 1}
   m_Transform:
     e00: 1
     e01: 0
