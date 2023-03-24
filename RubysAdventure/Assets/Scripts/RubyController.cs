@@ -2,22 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class RubyController: MonoBehaviour {
     AudioSource audioSource;
     public AudioClip damageClip;
     public int maxHealth = 5;
-    public bool animLowHP = false, isInvincible = false;
-    float timeInvincible = 0f, invincibleTimer = 2.5f, shotPace = .33f, shotCD = 0f;
+    public bool animLowHP = false, isInvincible = false, onSettings = false;
+    float timeInvincible = 0f, invincibleTimer = 2.5f, shotPace = .5f, shotCD = 0f;
     public Animator rubyAnimator;
     public int health { get { return currentHealth; } }
-    public int currentHealth, prevHealth;
+    public int currentHealth, prevHealth, robotCount = 0;
     Vector2 position, inputMovement, lookDirection = new Vector2 (1f, 0f);
     bool hasHorizontalInput, hasVerticalInput, isWalking;
     public float maxSpeed = 7.5f, speed = 5f, ogSpeed = 5f;
     Rigidbody2D rigidbody2d;
-    public GameObject prefabCog;
+    public GameObject prefabCog, endingCanvas;
     Projectile projectile;
+    public Image reloadAtt;
 
     private void Awake () {
         rubyAnimator = GetComponent<Animator> ();
@@ -72,10 +74,16 @@ public class RubyController: MonoBehaviour {
         if (shotCD <= shotPace) {
             shotCD += Time.deltaTime;
         }
-        if ((Input.GetButton ("Fire1")|| Input.GetKey("c")) && shotCD > shotPace) {
-            Launch ();
-            shotCD = 0f;
+        
+        if (!onSettings) {
+            if (Input.GetKey("c") && shotCD > shotPace)
+            {
+                Launch();
+                shotCD = 0f;
+            }
         }
+
+        reloadAtt.fillAmount = shotCD / shotPace;
     }
 
     public void DetectInput () {
@@ -116,6 +124,16 @@ public class RubyController: MonoBehaviour {
     public void PlaySound (AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    public void RobotChange (int changeNumber)
+    {
+        robotCount -= changeNumber;
+
+        if (robotCount <= 0)
+        {
+            endingCanvas.SetActive(true);
+        }
     }
 
 }

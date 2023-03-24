@@ -10,10 +10,11 @@ public class EnemyController: MonoBehaviour {
     public ParticleSystem smokeEffect;
     Vector2 enemyPosition;
     Rigidbody2D rbEnemy;
-    public RubyController player;
+    public RubyController player, robotCounter;
     public Animator robotAnimator;
     // Start is called before the first frame update
     void Start () {
+        robotCounter.robotCount++;
         timer = changeTime;
         robotAnimator = GetComponent<Animator> ();
         collisionTimer = collisionChangeTime;
@@ -87,5 +88,6 @@ public class EnemyController: MonoBehaviour {
         broken = false;
         rbEnemy.simulated = false;
         robotAnimator.SetTrigger ("Fixed");
+        robotCounter.RobotChange(1);
     }
 }

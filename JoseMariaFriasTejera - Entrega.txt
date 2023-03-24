@@ -1,2 +1,17 @@
 Alumno: José María Frías Tejera
 Enlace de gitHub: https://github.com/JoseMFT/Practica-LaAventuraDeRuby
+
+Notas: 
+Agregado un NPC con un cuadro de diálogo, un menú para controlar el volumen del juego (al que se puede acceder
+pulsando la tecla ESCAPE), y un contador que finaliza el juego al arreglar todos los robots. 
+Ello además de algún otro efecto de sonido y pantalla final. También hay una imagen que indica si se puede disparar o si hay que esperar para ello.
+
+Controles: 
+W/^: Moverse hacia arriba
+A/<: Moverse haca la izquierda
+S/v: Moverse hacia abajo
+D/>: Moverse hacia la derecha
+
+C: Disparar
+
+Esc: Menú 
